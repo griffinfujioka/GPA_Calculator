@@ -40,7 +40,7 @@ namespace GPA_Calculator
         {
            
 
-            // TODO: Handle no input. If you leave any of the textbox blank you're fucked. 
+            
             #region Declare and retrieve class credits for classes 1-6
             int class1Credits;
             int class2Credits;
@@ -197,9 +197,12 @@ namespace GPA_Calculator
                         break;
                     case "C+":
                         letterGradeAsDouble = 2.33;
+                        break; 
+                    case "C":
+                        letterGradeAsDouble = 2.0; 
                         break;
                     case "C-":
-                        letterGradeAsDouble = 2.0;
+                        letterGradeAsDouble = 1.67;
                         break;
                     case "D+":
                         letterGradeAsDouble = 1.33;
@@ -224,30 +227,42 @@ namespace GPA_Calculator
             }
 
             double GPA = totalGPAPoints / totalCredits;
-            gpaTxtBlock.Text = "GPA: " + GPA;
+            gpaTxtBlock.Text = "GPA: " + GPA.ToString("N2");
             #endregion
         }
 
+        // TODO: When a 'class[i]' (for i:1-6) textblock is tapped, drop down a text box and allow users to change the name
         private void TextBlock_Tapped_1(object sender, TappedRoutedEventArgs e)
         {
+            // TODO: Fill in the missing pieces. This has some pieces but is not complete. 
             // Drop down a textbox allowing user to edit class name
+
+            string textblockText = (sender as TextBlock).Text;  // classi for i: 1-6
+            int i = Convert.ToInt32(textblockText[6]);  // i will be 1-6...unless the user tries to break it. 
             (sender as TextBlock).Text = "New name";    // Dumbie Proof of Concept line
         }
 
+        #region validate credit input
         public bool validateCreditsInput(string input)
         {
             // return True if valid integer 1-9
             string numbers = "[1-9]";
             int inputAsInt = 0;
-            if(input != "")
-                inputAsInt = Convert.ToInt32(input); 
-            Match match = Regex.Match(input, numbers, RegexOptions.IgnoreCase);
-            if (match.Success && inputAsInt < 10)
-                return true; 
+            if (input != "")
+            {
+                Match match = Regex.Match(input, numbers, RegexOptions.IgnoreCase);
+                if (!match.Success)
+                    return false; 
+                
+                if (match.Success && inputAsInt < 10)
+                    return true;
+            }
 
             return false; 
         }
+        #endregion
 
+        #region validate grade input
         public bool validateGradesInput(string input)
         {
             // return True if valid grade A-F including +/- grades
@@ -266,8 +281,9 @@ namespace GPA_Calculator
                 input == "D-" ||
                 input == "F")
                 return true; 
-            return false; 
+            return false;
         }
-    
+        #endregion 
+
     }
 }
