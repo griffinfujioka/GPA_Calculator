@@ -4,7 +4,7 @@
   <Properties>
     <DisplayName>GPA_Calculator</DisplayName>
     <PublisherDisplayName>Griffin</PublisherDisplayName>
-    <Logo>Assets\StoreLogo.png</Logo>
+    <Logo>Assets\STORELOGO.png</Logo>
   </Properties>
   <Prerequisites>
     <OSMinVersion>6.2.1</OSMinVersion>
