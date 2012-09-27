@@ -36,12 +36,13 @@ namespace GPA_Calculator
         {
         }
 
+        #region Calculate button click
         private void Calculate_Btn_Click(object sender, RoutedEventArgs e)
         {
            
 
             
-            #region Declare and retrieve class credits for classes 1-6
+            #region Declare, retrieve and validate input for credits for classes 1-6
             int class1Credits;
             int class2Credits;
             int class3Credits;
@@ -49,7 +50,7 @@ namespace GPA_Calculator
             int class5Credits;
             int class6Credits;
             if (validateCreditsInput(class1CreditsTxtBox.Text))
-                class1Credits = Convert.ToInt32(class1CreditsTxtBox.Text);
+                class1Credits = Convert.ToInt32(class1CreditsTxtBox.Text[0]);
             else
             {
                 class1CreditsTxtBox.Text = ""; 
@@ -57,7 +58,7 @@ namespace GPA_Calculator
             }
 
             if (validateCreditsInput(class2CreditsTxtBox.Text))
-                class2Credits = Convert.ToInt32(class2CreditsTxtBox.Text);
+                class2Credits = Convert.ToInt32(class2CreditsTxtBox.Text[0]);
             else
             {
                 class2CreditsTxtBox.Text = ""; 
@@ -65,7 +66,7 @@ namespace GPA_Calculator
             }
 
             if (validateCreditsInput(class3CreditsTxtBox.Text))
-                class3Credits = Convert.ToInt32(class3CreditsTxtBox.Text);
+                class3Credits = Convert.ToInt32(class3CreditsTxtBox.Text[0]);
             else
             {
                 class3CreditsTxtBox.Text = "";
@@ -73,7 +74,7 @@ namespace GPA_Calculator
             }
 
             if (validateCreditsInput(class4CreditsTxtBox.Text))
-                class4Credits = Convert.ToInt32(class4CreditsTxtBox.Text);
+                class4Credits = Convert.ToInt32(class4CreditsTxtBox.Text[0]);
             else
             {
                 class4CreditsTxtBox.Text = "";
@@ -81,7 +82,7 @@ namespace GPA_Calculator
             }
 
             if (validateCreditsInput(class5CreditsTxtBox.Text))
-                class5Credits = Convert.ToInt32(class5CreditsTxtBox.Text);
+                class5Credits = Convert.ToInt32(class5CreditsTxtBox.Text[0]);
             else
             {
                 class5CreditsTxtBox.Text = "";
@@ -89,7 +90,7 @@ namespace GPA_Calculator
             }
 
             if (validateCreditsInput(class6CreditsTxtBox.Text))
-                class6Credits = Convert.ToInt32(class6CreditsTxtBox.Text);
+                class6Credits = Convert.ToInt32(class6CreditsTxtBox.Text[0]);
             else
             {
                 class6CreditsTxtBox.Text = "";
@@ -97,7 +98,7 @@ namespace GPA_Calculator
             }
             #endregion
 
-            #region Declare and retrieve class grades for classes 1-6
+            #region Declare, retrieve and validate input for grades for classes 1-6
             string class1Grade;
             string class2Grade;
             string class3Grade;
@@ -227,31 +228,38 @@ namespace GPA_Calculator
             }
 
             double GPA = totalGPAPoints / totalCredits;
+            if (GPA < 0 || GPA.ToString() == "NaN")
+                GPA = 0; 
             gpaTxtBlock.Text = "GPA: " + GPA.ToString("N2");
             #endregion
         }
+#endregion 
 
         // TODO: When a 'class[i]' (for i:1-6) textblock is tapped, drop down a text box and allow users to change the name
+        #region TextBlock tapped
         private void TextBlock_Tapped_1(object sender, TappedRoutedEventArgs e)
         {
             // TODO: Fill in the missing pieces. This has some pieces but is not complete. 
             // Drop down a textbox allowing user to edit class name
+            // Get new name
+            //editClassNameTxtBox.Visibility = Visibility.Visible; // Show the textbox
 
             string textblockText = (sender as TextBlock).Text;  // classi for i: 1-6
             int i = Convert.ToInt32(textblockText[6]);  // i will be 1-6...unless the user tries to break it. 
             (sender as TextBlock).Text = "New name";    // Dumbie Proof of Concept line
         }
+        #endregion 
 
         #region validate credit input
         public bool validateCreditsInput(string input)
         {
-            // return True if valid integer 1-9
+            
             string numbers = "[1-9]";
             int inputAsInt = 0;
             if (input != "")
             {
                 Match match = Regex.Match(input, numbers, RegexOptions.IgnoreCase);
-                if (!match.Success)
+                if (!match.Success || input.Length > 1)
                     return false; 
                 
                 if (match.Success && inputAsInt < 10)

@@ -119,6 +119,11 @@
     <None Include="GPA_Calculator_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\GPAcalc150x150.png" />
+    <Content Include="Assets\GPAcalcSMALL.png" />
+    <Content Include="Assets\GPAcalcSPLASHSCREEN.png" />
+    <Content Include="Assets\GPAcalcSTORELOGO.png" />
+    <Content Include="Assets\GPAcalcWIDE.png" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
