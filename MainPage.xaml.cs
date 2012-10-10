@@ -36,6 +36,13 @@ namespace GPA_Calculator
         {
         }
 
+        /* BUG !! 
+         * 
+         * To recreate: 
+         *      1) Enter a class with 4 credits and an A receieved. GPA will be 4.00 
+         *      2) Enter a second class with 3 credits and 3 received. (Invalid input)
+         *      
+         * The GPA will adjust as if a class with 3 credits and an F received was added, but it should be ignored */ 
         #region Calculate button click
         private void Calculate_Btn_Click(object sender, RoutedEventArgs e)
         {
@@ -178,49 +185,57 @@ namespace GPA_Calculator
 
             foreach (Class cl in classes)
             {
-                // Calculate the total GPA credits for the class by credits*grade
-                switch (cl.grade)
+                /* If the class has a valid number of credits */ 
+                if (cl.credits.ToString() != "")
                 {
-                    case "A":
-                        letterGradeAsDouble = 4.0;
-                        break;
-                    case "A-":
-                        letterGradeAsDouble = 3.67;
-                        break;
-                    case "B+":
-                        letterGradeAsDouble = 3.33;
-                        break;
-                    case "B":
-                        letterGradeAsDouble = 3.0;
-                        break;
-                    case "B-":
-                        letterGradeAsDouble = 2.67;
-                        break;
-                    case "C+":
-                        letterGradeAsDouble = 2.33;
-                        break; 
-                    case "C":
-                        letterGradeAsDouble = 2.0; 
-                        break;
-                    case "C-":
-                        letterGradeAsDouble = 1.67;
-                        break;
-                    case "D+":
-                        letterGradeAsDouble = 1.33;
-                        break;
-                    case "D":
-                        letterGradeAsDouble = 1.0;
-                        break;
-                    case "D-":
-                        letterGradeAsDouble = .67;
-                        break;
-                    case "F":
-                        letterGradeAsDouble = 0.0;
-                        break;
-                    default:
-                        letterGradeAsDouble = 0.0;
-                        break;
+                    // Calculate the total GPA credits for the class by credits*grade
+                    switch (cl.grade)
+                    {
+                        case "A":
+                            letterGradeAsDouble = 4.0;
+                            break;
+                        case "A-":
+                            letterGradeAsDouble = 3.67;
+                            break;
+                        case "B+":
+                            letterGradeAsDouble = 3.33;
+                            break;
+                        case "B":
+                            letterGradeAsDouble = 3.0;
+                            break;
+                        case "B-":
+                            letterGradeAsDouble = 2.67;
+                            break;
+                        case "C+":
+                            letterGradeAsDouble = 2.33;
+                            break;
+                        case "C":
+                            letterGradeAsDouble = 2.0;
+                            break;
+                        case "C-":
+                            letterGradeAsDouble = 1.67;
+                            break;
+                        case "D+":
+                            letterGradeAsDouble = 1.33;
+                            break;
+                        case "D":
+                            letterGradeAsDouble = 1.0;
+                            break;
+                        case "D-":
+                            letterGradeAsDouble = .67;
+                            break;
+                        case "F":
+                            letterGradeAsDouble = 0.0;
+                            break;
+                        case "":
+                            cl.credits = 0;         /* Invalid input case: Just don't count that class if invalid grade was entered */
+                            break;
+                        default:
+                            letterGradeAsDouble = 0.0;
+                            break;
+                    }
                 }
+                
 
                 totalGPAPoints += (letterGradeAsDouble) * (cl.credits);
                 totalCredits += cl.credits;
@@ -246,7 +261,7 @@ namespace GPA_Calculator
 
             string textblockText = (sender as TextBlock).Text;  // classi for i: 1-6
             int i = Convert.ToInt32(textblockText[6]);  // i will be 1-6...unless the user tries to break it. 
-            (sender as TextBlock).Text = "New name";    // Dumbie Proof of Concept line
+            //(sender as TextBlock).Text = "New name";    // Dumbie Proof of Concept line
         }
         #endregion 
 
