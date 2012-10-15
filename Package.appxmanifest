@@ -17,7 +17,7 @@
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="GPA_Calculator.App">
       <VisualElements DisplayName="GPA_Calculator" Logo="Assets\GPAcalc150x150.png" SmallLogo="Assets\GPAcalcSMALL.png" Description="GPA_Calculator" ForegroundText="light" BackgroundColor="#228B22">
         <DefaultTile ShowName="allLogos" WideLogo="Assets\GPAcalcWIDE.png" />
-        <SplashScreen Image="Assets\GPAcalcSPLASHSCREEN.png" />
+        <SplashScreen Image="Assets\GPAcalcSPLASHSCREEN.png" BackgroundColor="#228B22" />
       </VisualElements>
     </Application>
   </Applications>
